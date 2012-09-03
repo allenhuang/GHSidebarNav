@@ -77,7 +77,7 @@ const NSTimeInterval kGHSidebarDefaultSearchDelay = 0.8;
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (searchDelegate) {
-		[searchDelegate searchResult:mutableEntries[indexPath.row] selectedAtIndexPath:indexPath];
+		[searchDelegate searchResult:[mutableEntries objectAtIndex:indexPath.row] selectedAtIndexPath:indexPath];
 	}
 }
 
@@ -89,7 +89,7 @@ const NSTimeInterval kGHSidebarDefaultSearchDelay = 0.8;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = nil;
 	if (searchDelegate) {
-		id entry = mutableEntries[indexPath.row];
+		id entry = [mutableEntries objectAtIndex:indexPath.row];
 		cell = [searchDelegate searchResultCellForEntry:entry atIndexPath:indexPath inTableView:tableView];
 	}
 	return cell;
@@ -148,7 +148,7 @@ const NSTimeInterval kGHSidebarDefaultSearchDelay = 0.8;
 - (void)performSearch {
 	NSString *text = self.searchBar.text;
 	NSString *scope = (self.searchBar.showsScopeBar) 
-		? self.searchBar.scopeButtonTitles[self.searchBar.selectedScopeButtonIndex] 
+		? [self.searchBar.scopeButtonTitles objectAtIndex:self.searchBar.selectedScopeButtonIndex] 
 		: nil;
 	if ([@"" isEqualToString:text]) {
 		[mutableEntries removeAllObjects];
